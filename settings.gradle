@@ -1,0 +1,3 @@
+rootProject.name = 'lab9x-camelia-lazar'
+include 'web'
+include 'core'
