@@ -1,0 +1,9 @@
+<h2>New Movie</h2>
+
+<div>
+  <label>Name:<input #nameInput/></label><br/>
+  <label>Duration:<input #durationInput/></label><br/>
+  <label>Genre:<input #genreInput/></label><br/>
+  <button (click)="saveMovie(nameInput.value,durationInput.value,genreInput.value)">
+    Save</button>
+</div>

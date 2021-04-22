@@ -1,0 +1,6 @@
+<h2>Tickets</h2>
+<ol>
+  <li *ngFor="let ticket of tickets">
+    {{"Price: " + ticket.price}} --- {{"Movie name: " + ticket.movie.name}} --- {{"Client Name: " + ticket.client.clientFirstName}}  {{ticket.client.clientLastName}}</li>
+</ol>
+
