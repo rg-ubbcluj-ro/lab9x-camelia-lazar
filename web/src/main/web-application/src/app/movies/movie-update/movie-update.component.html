@@ -1,0 +1,76 @@
+<h2>Update A Movie</h2>
+
+<form #updateMovieForm="ngForm" (ngSubmit)="updateMovie()">
+  <div class="form-group">
+    <label for="id"> Movie id </label>
+    <input type="number" class="form-control" id ="id" name="id"
+           required
+           [(ngModel)]="movieId" name = "id" #idOfMovie="ngModel">
+    <div *ngIf="idOfMovie.invalid && (idOfMovie.dirty || idOfMovie.touched)"
+         class="alert alert-danger">
+      <div *ngIf="idOfMovie.errors != null && idOfMovie.errors.required">
+        Movie id is required
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="form-group">
+    <label for="name"> New movie name </label>
+    <input type="text" class="form-control" id ="name" name="name"
+           required minlength="3"
+           [(ngModel)]="movieName" name = "name" #nameOfMovie="ngModel">
+    <div *ngIf="nameOfMovie.invalid && (nameOfMovie.dirty || nameOfMovie.touched)"
+         class="alert alert-danger">
+      <div *ngIf="nameOfMovie.errors != null && nameOfMovie.errors.required">
+        Movie name is required
+      </div>
+
+      <div *ngIf="nameOfMovie.errors != null && nameOfMovie.errors.minLength">
+        Movie name must be at least 3 characters long
+      </div>
+    </div>
+  </div>
+  <br/>
+
+  <div class="form-group">
+    <label for="duration"> New movie duration </label>
+    <input type="number" class="form-control" id ="duration" name="duration"
+           required minlength="2"
+           [(ngModel)]="movieDuration" name = "duration" #durationOfMovie="ngModel">
+    <div *ngIf="durationOfMovie.invalid && (durationOfMovie.dirty || durationOfMovie.touched)"
+         class="alert alert-danger">
+      <div *ngIf="durationOfMovie.errors != null && durationOfMovie.errors.required">
+        Movie duration is required
+      </div>
+
+      <div *ngIf="durationOfMovie.errors != null && durationOfMovie.errors.minLength">
+        Movie duration must be at least 2 characters long
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="form-group">
+    <label for="genre"> New movie genre </label>
+    <input type="text" class="form-control" id ="genre" name="genre"
+           required  minlength="2"
+           [(ngModel)]="movieGenre" name="genre" #genreOfMovie="ngModel">
+    <div *ngIf="genreOfMovie.invalid && (genreOfMovie.dirty || genreOfMovie.touched)"
+         class="alert alert-danger">
+      <div *ngIf="genreOfMovie.errors != null && genreOfMovie.errors.required">
+        Movie genre is required
+      </div>
+
+      <div *ngIf="genreOfMovie.errors != null && genreOfMovie.errors.minLength">
+        Movie genre must be at least 2 characters long
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <button type = "submit" [disabled]="!updateMovieForm.form.valid"> Update Movie </button>
+
+</form>

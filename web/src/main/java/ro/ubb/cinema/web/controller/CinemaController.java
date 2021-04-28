@@ -87,4 +87,16 @@ public class CinemaController {
         log.trace("filterByName - method finished");
         return cinemasDto;
     }
+
+    @RequestMapping(value = "/cinemas/sortByName", method = RequestMethod.GET)
+    CinemasDto sortCinemaByName() {
+        log.trace("sortCinemaByName - method entered");
+
+        CinemasDto cinemasDto = new CinemasDto(
+                cinemaConverter.convertModelsToDtos(
+                        cinemaService.sortCinemaByName()));
+
+        log.trace("sortCinemaByName - method finished");
+        return cinemasDto;
+    }
 }

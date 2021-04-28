@@ -52,6 +52,10 @@ public class MovieController {
     MovieDto updateMovie(@PathVariable Long id,
                          @RequestBody MovieDto dto) {
         log.trace("updateMovie - method entered: movieDto={}", dto);
+//        dto.setId(id);
+//
+//        log.trace("updateMovie - after setup id: movieDto={}", dto);
+
 
         MovieDto movieDto=  movieConverter.convertModelToDto(
                 movieService.updateMovie(

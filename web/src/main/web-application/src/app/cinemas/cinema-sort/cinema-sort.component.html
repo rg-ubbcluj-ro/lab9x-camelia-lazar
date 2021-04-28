@@ -1,0 +1,7 @@
+<button (click)="sortCinemaByName()">
+  Sort by name </button>
+
+<ol>
+  <li *ngFor="let cinema of cinemas">
+    {{cinema.name}} </li>
+</ol>

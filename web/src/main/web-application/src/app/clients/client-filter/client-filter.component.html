@@ -1,0 +1,12 @@
+<h2>Filter Clients By Age </h2>
+
+<div>
+  <label>Age:<input #ageInput/></label><br/>
+  <button (click)="filterClientsByAge(ageInput.value)">
+    Filter</button>
+</div>
+
+<ol>
+  <li *ngFor="let client of clients">
+    {{client.id}} --- {{client.firstName}} --- {{client.age}} </li>
+</ol>

@@ -37,6 +37,8 @@ public interface CinemaService {
      * @return a Set of the filtered cinemas
      */
     List<Cinema> filterCinemaByName(String string);
+
+    List<Cinema> sortCinemaByName();
 //
 //    void deleteCinemaByAddress(String string);
 //
