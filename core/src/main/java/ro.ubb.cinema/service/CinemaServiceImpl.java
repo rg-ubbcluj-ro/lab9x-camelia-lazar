@@ -12,6 +12,7 @@ import ro.ubb.cinema.repository.CinemaJDBCRepository;
 
 import javax.xml.bind.SchemaOutputResolver;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service for managing Cinemas
@@ -76,5 +77,23 @@ public class CinemaServiceImpl implements CinemaService {
         log.trace("filterCinemaByName - method finished: filteredCinemas={}", filteredCinemas);
 
         return filteredCinemas;
+    }
+
+    @Override
+    public List<Cinema> sortCinemaByName() {
+        log.trace("sortCinemaByName - method entered");
+
+        List<Cinema> cinemas = repository.findAll();
+
+//        Comparator<Cinema> compareByName = (Cinema o1, Cinema o2) -> o1.getName().compareTo( o2.getName() );
+//        Collections.sort(cinemas, compareByName);
+
+        List<Cinema> sortedCinemas = cinemas.stream()
+                .sorted(Comparator.comparing(Cinema::getName))
+                .collect(Collectors.toList());
+
+        log.trace("sortCinemaByName - method finished: cinemas={}", sortedCinemas);
+
+        return sortedCinemas;
     }
 }

@@ -28,6 +28,12 @@ export class MovieService {
       .post<Movie>(this.moviesUrl, movie);
   }
 
+  updateMovie(id: number, movie: Movie): Observable<Movie> {
+    const url = `${this.moviesUrl}/${id}`;
+    return this.httpClient
+      .put<Movie>(url, movie);
+  }
+
   deleteMovie(id: number): Observable<Movie> {
     const url = `${this.moviesUrl}/${id}`;
 
@@ -60,6 +66,6 @@ export class MovieService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`Cinema: ${message}`);
+    this.messageService.add(`Movie: ${message}`);
   }
 }
