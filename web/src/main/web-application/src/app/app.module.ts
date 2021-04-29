@@ -26,6 +26,10 @@ import { ClientListComponent } from './clients/client-list/client-list.component
 import { ClientFilterComponent } from './clients/client-filter/client-filter.component';
 import { ClientSortComponent } from './clients/client-sort/client-sort.component';
 import {ClientService} from './clients/shared/client.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -54,6 +58,10 @@ import {ClientService} from './clients/shared/client.service';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [MovieService, CinemaService, TicketService, ClientService],
   bootstrap: [AppComponent]

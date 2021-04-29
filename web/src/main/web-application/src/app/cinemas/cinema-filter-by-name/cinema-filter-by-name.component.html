@@ -1,12 +1,35 @@
 <h2>Filter Cinema By Name </h2>
 
-<div>
-  <label>Name:<input #nameInput/></label><br/>
-  <button (click)="filterCinemaByName(nameInput.value)">
-    Filter</button>
-</div>
+<!--<div>-->
+<!--  <label>Name:<input #nameInput/></label><br/>-->
+<!--  <button (click)="filterCinemaByName(nameInput.value)">-->
+<!--    Filter</button>-->
+<!--</div>-->
 
-<ol>
-  <li *ngFor="let cinema of cinemas">
-    {{cinema.id}} --- {{cinema.name}} </li>
-</ol>
+<!--<ol>-->
+<!--  <li *ngFor="let cinema of cinemas">-->
+<!--    {{cinema.id}} -&#45;&#45; {{cinema.name}} </li>-->
+<!--</ol>-->
+
+<!--<div>-->
+<!--  <label>Name:<input #nameInput/></label><br/>-->
+<!--  <button (click)="filterCinemaByName(nameInput.value)">-->
+<!--    Filter</button>-->
+<!--</div>-->
+
+<!--<ol>-->
+<!--  <li *ngFor="let cinema of cinemas">-->
+<!--    {{cinema.id}} -&#45;&#45; {{cinema.name}} </li>-->
+<!--</ol>-->
+
+<form class = "autocomplete-form">
+  <mat-form-field class = "full-width-form">
+    <label> Name</label>
+    <input type = "text" style = "border: solid 1px black;" matInput [formControl] = "myControl" [matAutocomplete]="auto" (input)="update()">
+    <mat-autocomplete #auto = "matAutocomplete">
+      <mat-option *ngFor = "let option of filteredOptions | async" [value] = "option">
+        {{option.id}} --- {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
