@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {MovieService} from "../../movies/shared/movie.service";
-import {Movie} from "../../movies/shared/movie.model";
-import {TicketService} from "../shared/ticket.service";
-import {Ticket} from "../shared/ticket.model";
+import {MovieService} from '../../movies/shared/movie.service';
+import {Movie} from '../../movies/shared/movie.model';
+import {TicketService} from '../shared/ticket.service';
+import {Ticket} from '../shared/ticket.model';
+import {FormControl} from "@angular/forms";
+
 
 @Component({
   selector: 'app-tickets-list',
@@ -12,13 +14,14 @@ import {Ticket} from "../shared/ticket.model";
 export class TicketsListComponent implements OnInit {
   tickets: Ticket[] | undefined;
 
-
   constructor(private ticketService: TicketService) {
   }
 
   ngOnInit(): void {
     this.ticketService.getTickets()
-      .subscribe(tickets => this.tickets = tickets.tickets);
+      .subscribe(tickets => {
+        this.tickets = tickets.tickets;
+      });
   }
 
 }
