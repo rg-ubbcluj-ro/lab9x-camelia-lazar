@@ -11,4 +11,5 @@ public class MovieDto extends BaseDto{
     private String name;
     private Integer duration;
     private String genre;
+    private TrailerDto trailer;
 }

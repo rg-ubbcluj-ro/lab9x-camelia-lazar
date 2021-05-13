@@ -1,0 +1,10 @@
+<h2>New Ticket</h2>
+
+<div>
+  <label>Price:<input #priceInput/></label><br/>
+  <label>Movie:<input #movieInput/></label><br/>
+  <label>Client:<input #clientInput/></label><br/>
+  <button (click)="saveTicket(priceInput.value,movieInput.value,clientInput.value)">
+    Save</button>
+</div>
+

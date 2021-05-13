@@ -51,6 +51,8 @@ public interface ClientService {
      */
 
     List<Client> filterClientsByLastName(String s);
+
+    Client getClientById(Long id);
 //
 //    /**
 //     * Increases the all ages with given integer

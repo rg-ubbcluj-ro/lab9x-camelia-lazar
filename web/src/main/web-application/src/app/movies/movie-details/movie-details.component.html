@@ -1,8 +1,9 @@
 <h2>Movies</h2>
-<ol>
+<ul>
   <li *ngFor="let movie of movies">
-    {{movie.id}} --- {{movie.name}} --- {{movie.duration}} --- {{movie.genre}}</li>
-</ol>
-
+    ID: {{movie.id}} -- Name: {{movie.name}} -- Genre: {{movie.genre}} <br>
+    ------ TRAILER: Publishing year: {{movie?.trailer?.publishingYear}} --- Soundtrack: {{movie?.trailer?.soundtrack}}
+  </li>
+</ul>
 <a href="/movies">See all movies</a>
 

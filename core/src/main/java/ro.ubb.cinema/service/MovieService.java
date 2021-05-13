@@ -53,6 +53,8 @@ public interface MovieService {
      * @return an Set<Movie> - all the movies which contains the string in the name
      */
     List<Movie> filterMoviesByGenre(String genre);
+
+    Movie getMovieById(Long id);
 //
 //    /**
 //     * Returns the movies with the maximum duration

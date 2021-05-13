@@ -81,6 +81,11 @@ public class ClientServiceImpl implements ClientService {
 
         return filteredClients;
     }
+
+    @Override
+    public Client getClientById(Long id) {
+        return repository.findById(id).get();
+    }
 //
 //    @Override
 //    @Transactional

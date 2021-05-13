@@ -1,7 +1,7 @@
 export class Client {
   id: number | undefined;
-  clientFirstName!: number;
-  clientLastName!: string;
+  firstName!: string;
+  lastName!: string;
   email: string | undefined;
   age: number | undefined;
 }

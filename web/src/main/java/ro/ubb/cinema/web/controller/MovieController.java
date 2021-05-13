@@ -37,6 +37,7 @@ public class MovieController {
 
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
     MovieDto addMovie(@RequestBody MovieDto movieDto){
+        System.out.println(movieDto);
         log.trace("addMovie - method entered: movieDto={}", movieDto);
         var movie = movieConverter.convertDtoToModel(movieDto);
 

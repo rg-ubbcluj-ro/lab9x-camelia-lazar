@@ -88,6 +88,12 @@ public class MovieServiceImpl implements MovieService {
 
         return filteredMovies;
     }
+
+    @Override
+    public Movie getMovieById(Long id) {
+        return repository.findById(id).get();
+    }
+
 //
 //    @Override
 //    public Set<Movie> getLongestMovies() {

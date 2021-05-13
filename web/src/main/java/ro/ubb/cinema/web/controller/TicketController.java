@@ -64,22 +64,22 @@ public class TicketController {
 
     @RequestMapping(value = "/tickets/{id}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteTicket(@PathVariable Long id) {
-        log.trace("deleteTicket - method entered: id={}", id);
+        log.trace("deleteTicket - method entered: ticketId ={}", id);
         ticketService.deleteTicket(id);
         log.trace("deleteTicket - method finished");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tickets/filterByPrice", method = RequestMethod.POST)
-    TicketsDto filterTicketByPrice(@RequestBody Double numberToCompareWith) {
-        log.trace("filterByPrice - method entered: numberToCompareWith={}", numberToCompareWith);
-
-        TicketsDto ticketsDto = new TicketsDto(
-                ticketConverter.convertModelsToDtos(
-                        ticketService.filterTicketsByPrice(numberToCompareWith)));
-
-        log.trace("filterByPrice - method finished");
-        return ticketsDto;
-    }
+//    @RequestMapping(value = "/tickets/filterByPrice", method = RequestMethod.POST)
+//    TicketsDto filterTicketByPrice(@RequestBody Double numberToCompareWith) {
+//        log.trace("filterByPrice - method entered: numberToCompareWith={}", numberToCompareWith);
+//
+//        TicketsDto ticketsDto = new TicketsDto(
+//                ticketConverter.convertModelsToDtos(
+//                        ticketService.filterTicketsByPrice(numberToCompareWith)));
+//
+//        log.trace("filterByPrice - method finished");
+//        return ticketsDto;
+//    }
 }
 
