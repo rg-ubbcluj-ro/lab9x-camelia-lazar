@@ -2,6 +2,7 @@ package ro.ubb.cinema.domain.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -58,5 +59,10 @@ public class Client extends BaseEntity<Long>{
                 .collect(Collectors.toList())
                 .get(0);
         addedTicket.setPrice(ticket.getPrice());
+    }
+
+    public Set<Ticket> getTickets() {
+        tickets = this.tickets == null ? new HashSet<>() : this.tickets;
+        return tickets;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ro.ubb.cinema.domain.entities.Movie;
 import ro.ubb.cinema.domain.validators.MovieValidator;
 import ro.ubb.cinema.domain.validators.exceptions.ValidatorException;
+import ro.ubb.cinema.repository.ClientJDBCRepository;
 import ro.ubb.cinema.repository.MovieJDBCRepository;
 
 import javax.transaction.Transactional;
@@ -22,6 +23,9 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieJDBCRepository repository;
+
+    @Autowired
+    private ClientJDBCRepository clientRepository;
 
     private final MovieValidator movieValidator = new MovieValidator();
     private static final Logger log = LoggerFactory.getLogger(MovieServiceImpl.class);
@@ -39,7 +43,15 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteMovie(Long id) {
         log.trace("deleteMovie - method entered: movieId={}", id);
-            repository.deleteById(id);
+        Movie movie = repository.findById(id).get();
+
+        movie.getTickets()
+                .forEach( t -> {
+                    t.getClient().deleteTicket(id);
+                    this.clientRepository.save(t.getClient());
+                });
+
+        repository.deleteById(id);
         log.trace("deleteMovie - method finished");
     }
 
