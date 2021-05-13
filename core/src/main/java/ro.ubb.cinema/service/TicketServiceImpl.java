@@ -4,24 +4,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.ubb.cinema.domain.entities.Room;
+import ro.ubb.cinema.domain.entities.Client;
+import ro.ubb.cinema.domain.entities.Movie;
 import ro.ubb.cinema.domain.entities.Ticket;
-import ro.ubb.cinema.domain.validators.RoomValidator;
 import ro.ubb.cinema.domain.validators.TicketValidator;
 import ro.ubb.cinema.domain.validators.exceptions.ValidatorException;
 import ro.ubb.cinema.repository.ClientJDBCRepository;
 import ro.ubb.cinema.repository.MovieJDBCRepository;
 import ro.ubb.cinema.repository.RoomJDBCRepository;
-import ro.ubb.cinema.repository.TicketJDBCRepository;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
 public class TicketServiceImpl implements TicketService {
-    @Autowired
-    private TicketJDBCRepository repository;
+//    @Autowired
+//    private TicketJDBCRepository repository;
     @Autowired
     private RoomJDBCRepository roomRepository;
     @Autowired
@@ -36,16 +36,57 @@ public class TicketServiceImpl implements TicketService {
     public Ticket saveTicket(Ticket ticket) throws ValidatorException {
         log.trace("addTicket - method entered: ticket={}", ticket);
         ticketValidator.validate(ticket);
-        Ticket returnedTicket = repository.save(ticket);
+
+        Long movieId = ticket.getMovie().getId();
+        Long clientId = ticket.getClient().getId();
+
+        Movie movie = movieRepository.findAll().stream()
+                .filter(m -> m.getId().equals(movieId))
+                .collect(Collectors.toList()).get(0);
+
+        Client client = clientRepository.findAll().stream()
+                .filter(c -> c.getId().equals(clientId))
+                .collect(Collectors.toList()).get(0);
+
+        ticket.setMovie(movie);
+        ticket.setClient(client);
+
+        movie.addTicket(ticket);
+        client.addTicket(ticket);
+
+        movieRepository.save(movie);
+        clientRepository.save(client);
+
         log.trace("addTicket - method finished");
-        return returnedTicket;
+        return ticket;
     }
 
     @Override
     public void deleteTicket(Long id) {
-        log.trace("deleteTicket - method entered: ticketId={}", id);
-            repository.deleteById(id);
-            log.trace("deleteTicket - method finished");
+        log.trace("deleteTicket - method entered: ticket {}", id);
+
+        List<Ticket> tickets = this.getAllTickets();
+
+        Ticket foundTicket = tickets.stream()
+                .filter(t -> t.getId().equals(id))
+                .collect(Collectors.toList()).get(0);
+
+        Long movieId = foundTicket.getMovie().getId();
+        Long clientId = foundTicket.getClient().getId();
+
+        Movie movie = movieRepository.findAll().stream()
+                .filter(m -> m.getId().equals(movieId))
+                .collect(Collectors.toList()).get(0);
+
+        Client client = clientRepository.findAll().stream()
+                .filter(c -> c.getId().equals(clientId))
+                .collect(Collectors.toList()).get(0);
+
+        movie.deleteTicket(clientId);
+        client.deleteTicket(movieId);
+
+        movieRepository.save(movie);
+        clientRepository.save(client);
     }
 
     @Override
@@ -53,13 +94,26 @@ public class TicketServiceImpl implements TicketService {
     public Ticket updateTicket(Ticket ticket) throws ValidatorException {
         log.trace("updateTicket - method entered: ticket={}", ticket);
         ticketValidator.validate(ticket);
-        Ticket updateTicket = repository.findById(ticket.getId()).orElseThrow();
-        updateTicket.setRoom(ticket.getRoom());
-        updateTicket.setClient(ticket.getClient());
-        updateTicket.setMovie(ticket.getMovie());
-        updateTicket.setPrice(ticket.getPrice());
-        updateTicket.setTime(ticket.getTime());
-        updateTicket.setDate(ticket.getDate());
+
+        Long movieId = ticket.getMovie().getId();
+        Long clientId = ticket.getClient().getId();
+
+        Movie movie = movieRepository.findAll().stream()
+                .filter(m -> m.getId().equals(movieId))
+                .collect(Collectors.toList()).get(0);
+
+        Client client = clientRepository.findAll().stream()
+                .filter(c -> c.getId().equals(clientId))
+                .collect(Collectors.toList()).get(0);
+
+        ticket.setMovie(movie);
+        ticket.setClient(client);
+
+        movie.updateTicket(ticket);
+        client.updateTicket(ticket);
+
+        movieRepository.save(movie);
+        clientRepository.save(client);
         log.trace("updateCinema - method finished");
         return ticket;
 
@@ -68,21 +122,25 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> getAllTickets() {
         log.trace("getAllTickets - method entered");
-        List<Ticket> tickets = repository.findAll();
+
+        List<Client> clients = this.clientRepository.findAll();
+        List<Ticket> tickets = clients.stream()
+                .flatMap(play -> play.getTickets().stream())
+                .collect(Collectors.toList());
 
         log.trace("getAllTickets - method finished: tickets={}", tickets);
         return tickets;
     }
 
-    @Override
-    public List<Ticket> filterTicketsByPrice(Double price) {
-        log.trace("filterTicketsByPrice - method entered: price={}", price);
-
-        List<Ticket> filteredTickets = repository.getAllByPriceLessThanEqual(price);
-
-        log.trace("filterTicketsByPrice - method finished: filteredTickets={}", filteredTickets);
-        return filteredTickets;
-    }
+//    @Override
+//    public List<Ticket> filterTicketsByPrice(Double price) {
+//        log.trace("filterTicketsByPrice - method entered: price={}", price);
+//
+//        List<Ticket> filteredTickets = repository.getAllByPriceLessThanEqual(price);
+//
+//        log.trace("filterTicketsByPrice - method finished: filteredTickets={}", filteredTickets);
+//        return filteredTickets;
+//    }
 //
 //    @Override
 //    public void deleteTicketsByDate(LocalDate date){

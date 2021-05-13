@@ -18,10 +18,11 @@ import java.util.Objects;
 
 @Entity(name = "Ticket")
 @NoArgsConstructor
+
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"movie", "client"})
+@ToString(callSuper = true, exclude = {"movie", "client"})
 @Table(name = "ticket")
 public class Ticket extends BaseEntity<Long>{
     @Column(name="price")
@@ -35,9 +36,9 @@ public class Ticket extends BaseEntity<Long>{
     @JoinColumn(name = "movieId")
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="roomId")
-    private Room room;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name="roomId")
+//    private Room room;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="clientId")

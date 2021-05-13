@@ -10,8 +10,12 @@ import {CinemasComponent} from './cinemas/cinemas.component';
 import {CinemaFilterByNameComponent} from './cinemas/cinema-filter-by-name/cinema-filter-by-name.component';
 import {CinemaSortComponent} from './cinemas/cinema-sort/cinema-sort.component';
 import {ClientsComponent} from './clients/clients.component';
-import {ClientFilterComponent} from "./clients/client-filter/client-filter.component";
-import {ClientSortComponent} from "./clients/client-sort/client-sort.component";
+import {ClientFilterComponent} from './clients/client-filter/client-filter.component';
+import {ClientSortComponent} from './clients/client-sort/client-sort.component';
+import {TicketAddComponent} from './tickets/ticket-add/ticket-add.component';
+import {TicketDeleteComponent} from './tickets/ticket-delete/ticket-delete.component';
+import {TicketUpdateComponent} from './tickets/ticket-update/ticket-update.component';
+import {MovieMostPopularGenresComponent} from "./movies/movie-most-popular-genres/movie-most-popular-genres.component";
 
 const routes: Routes = [
   {path: 'movies', component: MoviesComponent},
@@ -19,6 +23,7 @@ const routes: Routes = [
   {path: 'movie-delete', component: MovieDeleteComponent},
   {path: 'movie-details', component: MovieDetailsComponent},
   {path: 'movie-update', component: MovieUpdateComponent},
+  {path: 'movie-most-popular-genres', component: MovieMostPopularGenresComponent},
   {path: 'cinemas', component: CinemasComponent},
   {path: 'cinemas-filter-by-name', component: CinemaFilterByNameComponent},
   {path: 'cinemas-sort', component: CinemaSortComponent},
@@ -26,6 +31,9 @@ const routes: Routes = [
   {path: 'clients-filter', component: ClientFilterComponent},
   {path: 'clients-sort', component: ClientSortComponent},
   {path: 'tickets', component: TicketsComponent},
+  {path: 'ticket-add', component: TicketAddComponent},
+  {path: 'ticket-delete', component: TicketDeleteComponent},
+  {path: 'ticket-update', component: TicketUpdateComponent},
 ];
 
 @NgModule({

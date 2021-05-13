@@ -27,9 +27,14 @@ import { ClientFilterComponent } from './clients/client-filter/client-filter.com
 import { ClientSortComponent } from './clients/client-sort/client-sort.component';
 import {ClientService} from './clients/shared/client.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { TrailerComponent } from './trailer/trailer.component';
+import { TicketAddComponent } from './tickets/ticket-add/ticket-add.component';
+import { TicketUpdateComponent } from './tickets/ticket-update/ticket-update.component';
+import { TicketDeleteComponent } from './tickets/ticket-delete/ticket-delete.component';
+import { MovieMostPopularGenresComponent } from './movies/movie-most-popular-genres/movie-most-popular-genres.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +56,11 @@ import {MatInputModule} from "@angular/material/input";
     ClientListComponent,
     ClientFilterComponent,
     ClientSortComponent,
+    TrailerComponent,
+    TicketAddComponent,
+    TicketUpdateComponent,
+    TicketDeleteComponent,
+    MovieMostPopularGenresComponent,
   ],
   imports: [
     BrowserModule,

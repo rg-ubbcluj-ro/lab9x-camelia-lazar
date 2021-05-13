@@ -19,9 +19,9 @@ public class TicketValidator implements Validator<Ticket>{
                 .filter(ticket -> String.valueOf(ticket.getPrice()).matches("^[0-9]*.?[0-9]*$") && ticket.getPrice() >= 0)
                 .orElseThrow( () -> new ValidatorException("Invalid Price format"));
 
-        Optional.of(entity)
-                .filter(ticket -> ChronoUnit.DAYS.between(ticket.getDate(), LocalDate.now()) >= -7 )
-                .orElseThrow( () -> new ValidatorException("Invalid Date"));
+//        Optional.of(entity)
+//                .filter(ticket -> ChronoUnit.DAYS.between(ticket.getDate(), LocalDate.now()) >= -7 )
+//                .orElseThrow( () -> new ValidatorException("Invalid Date"));
     }
 }
 

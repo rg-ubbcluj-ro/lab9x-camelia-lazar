@@ -24,6 +24,8 @@ export class MovieService {
   }
 
   saveMovie(movie: Movie): Observable<Movie> {
+    console.log('In service');
+    console.log(movie);
     return this.httpClient
       .post<Movie>(this.moviesUrl, movie);
   }

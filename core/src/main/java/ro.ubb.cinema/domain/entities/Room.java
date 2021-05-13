@@ -14,8 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"cinema"})
+@ToString(callSuper = true, exclude = {"cinema"})
 @Table(name = "room")
 public class Room extends BaseEntity<Long>{
     @Column(name = "floorNumber")

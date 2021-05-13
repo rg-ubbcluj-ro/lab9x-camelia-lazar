@@ -69,6 +69,42 @@
     </div>
   </div>
 
+  <div> TRAILER DATA </div> <br>
+
+  <div class="form-group">
+    <label for="genre"> New movie trailer year </label>
+    <input type="text" class="form-control" id ="trailerYear" name="trailerYear"
+           required  minlength="4"
+           [(ngModel)]="trailerYear" name="trailerYear" #yearOfTrailer="ngModel">
+    <div *ngIf="yearOfTrailer.invalid && (yearOfTrailer.dirty || yearOfTrailer.touched)"
+         class="alert alert-danger">
+      <div *ngIf="yearOfTrailer.errors != null && yearOfTrailer.errors.required">
+        Trailer year is required
+      </div>
+
+      <div *ngIf="yearOfTrailer.errors != null && yearOfTrailer.errors.minLength">
+        Trailer year must be at least 4 characters long
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="genre"> New trailer soundtrack </label>
+    <input type="text" class="form-control" id ="soundtrack" name="soundtrack"
+           required  minlength="5"
+           [(ngModel)]="soundtrack" name="soundtrack" #soundtrackOfTrailer="ngModel">
+    <div *ngIf="soundtrackOfTrailer.invalid && (soundtrackOfTrailer.dirty || soundtrackOfTrailer.touched)"
+         class="alert alert-danger">
+      <div *ngIf="soundtrackOfTrailer.errors != null && soundtrackOfTrailer.errors.required">
+        Trailer soundtrack is required
+      </div>
+
+      <div *ngIf="soundtrackOfTrailer.errors != null && soundtrackOfTrailer.errors.minLength">
+        Trailer soundtrack must be at least 5 characters long
+      </div>
+    </div>
+  </div>
+
   <br>
 
   <button type = "submit" [disabled]="!updateMovieForm.form.valid"> Update Movie </button>

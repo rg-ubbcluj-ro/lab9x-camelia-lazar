@@ -31,7 +31,8 @@ public interface TicketService {
     /**
      * Removes the given ticket.
      *
-     * @param id
+     * @param id - id of the ticket
+     *
      *          must not be null.
      */
     void deleteTicket(Long id);
@@ -45,13 +46,13 @@ public interface TicketService {
     Ticket updateTicket(Ticket ticket) throws ValidatorException;
 
 
-    /**
-     * Returns all Tickets whose price is less than the given value.
-     *
-     * @param i - integer
-     * @return an {@code Set<Ticket>} - set of tickets that have the price less than the given value.
-     */
-    List<Ticket> filterTicketsByPrice(Double i);
+//    /**
+//     * Returns all Tickets whose price is less than the given value.
+//     *
+//     * @param i - integer
+//     * @return an {@code Set<Ticket>} - set of tickets that have the price less than the given value.
+//     */
+//    List<Ticket> filterTicketsByPrice(Double i);
 
 //    /**
 //     * Deletes all Tickets whose date is equal with the given date.
