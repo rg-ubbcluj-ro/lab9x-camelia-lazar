@@ -32,7 +32,7 @@ public class Ticket extends BaseEntity<Long>{
     @Column(name="time")
     private LocalTime time;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "movieId")
     private Movie movie;
 
@@ -40,7 +40,7 @@ public class Ticket extends BaseEntity<Long>{
 //    @JoinColumn(name="roomId")
 //    private Room room;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name="clientId")
     private Client client;
 }

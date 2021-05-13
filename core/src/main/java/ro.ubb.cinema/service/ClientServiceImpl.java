@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.ubb.cinema.domain.entities.Cinema;
 import ro.ubb.cinema.domain.entities.Client;
+import ro.ubb.cinema.domain.entities.Movie;
 import ro.ubb.cinema.domain.validators.ClientValidator;
 import ro.ubb.cinema.domain.validators.exceptions.ValidatorException;
 import ro.ubb.cinema.repository.ClientJDBCRepository;
+import ro.ubb.cinema.repository.MovieJDBCRepository;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -26,6 +28,9 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientJDBCRepository repository;
 
+    @Autowired
+    private MovieJDBCRepository movieRepository;
+
     private final ClientValidator clientValidator = new ClientValidator();
 
     @Override
@@ -40,6 +45,14 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void deleteClient(Long id) {
         log.trace("deleteClient - method entered: clientId={}", id);
+
+        Client client = repository.findById(id).get();
+
+        client.getTickets()
+                .forEach( t -> {
+                    t.getMovie().deleteTicket(id);
+                    this.movieRepository.save(t.getMovie());
+                });
 
         repository.deleteById(id);
         log.trace("deleteClient - method finished");

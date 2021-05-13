@@ -33,6 +33,7 @@ public class TicketServiceImpl implements TicketService {
     private static final Logger log = LoggerFactory.getLogger(TicketServiceImpl.class);
 
     @Override
+    @Transactional
     public Ticket saveTicket(Ticket ticket) throws ValidatorException {
         log.trace("addTicket - method entered: ticket={}", ticket);
         ticketValidator.validate(ticket);
@@ -62,6 +63,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public void deleteTicket(Long id) {
         log.trace("deleteTicket - method entered: ticket {}", id);
 
