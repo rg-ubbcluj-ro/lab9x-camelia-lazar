@@ -9,7 +9,37 @@ import java.util.Objects;
  * @author fivia.
  *
  */
-
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "roomGraphDirect",
+                attributeNodes = {
+                        @NamedAttributeNode("floorNumber"),
+                        @NamedAttributeNode("roomName"),
+                        @NamedAttributeNode("numberOfSeats"),
+                }
+        ),
+        @NamedEntityGraph(
+                name = "roomGraphLevel1",
+                attributeNodes = {
+                        @NamedAttributeNode("floorNumber"),
+                        @NamedAttributeNode("roomName"),
+                        @NamedAttributeNode("numberOfSeats"),
+                        @NamedAttributeNode(
+                                value = "cinema",
+                                subgraph = "cinemaSubGraphDirect"
+                        )
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "cinemaSubGraphDirect",
+                                attributeNodes = {
+                                        @NamedAttributeNode("name"),
+                                        @NamedAttributeNode("address")
+                                }
+                        )
+                }
+        )
+})
 @Entity(name = "Room")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +55,7 @@ public class Room extends BaseEntity<Long>{
     @Column(name = "numberOfSeats")
     private Integer numberOfSeats;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="cinemaId")
     private Cinema cinema;
 

@@ -4,13 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.ubb.cinema.domain.entities.Cinema;
 import ro.ubb.cinema.domain.entities.Client;
-import ro.ubb.cinema.domain.entities.Movie;
 import ro.ubb.cinema.domain.validators.ClientValidator;
 import ro.ubb.cinema.domain.validators.exceptions.ValidatorException;
-import ro.ubb.cinema.repository.ClientJDBCRepository;
-import ro.ubb.cinema.repository.MovieJDBCRepository;
+import ro.ubb.cinema.repository.client.ClientJDBCRepository;
+import ro.ubb.cinema.repository.movie.MovieJDBCRepository;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -46,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(Long id) {
         log.trace("deleteClient - method entered: clientId={}", id);
 
-        Client client = repository.findById(id).get();
+        Client client = repository.customFindOneLevel1(id);
 
         client.getTickets()
                 .forEach( t -> {
@@ -63,7 +61,7 @@ public class ClientServiceImpl implements ClientService {
     public Client updateClient(Client client) {
         log.trace("updateClient - method entered: client={}", client);
         clientValidator.validate(client);
-        Client updateClient = repository.findById(client.getId()).orElseThrow();
+        Client updateClient = repository.customFindOneLevel1(client.getId());
         updateClient.setClientFirstName(client.getClientFirstName());
         updateClient.setClientLastName(client.getClientLastName());
         updateClient.setClientEmail(client.getClientEmail());
@@ -77,7 +75,7 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> getAllClients() {
         log.trace("getAllClients - method entered");
 
-        List<Client> clients = repository.findAll();
+        List<Client> clients = repository.customFindAllLevel1();
 
         log.trace("getAllClients - method finished: clients={}", clients);
 
@@ -97,64 +95,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientById(Long id) {
-        return repository.findById(id).get();
+        return repository.customFindOneLevel1(id);
     }
-//
-//    @Override
-//    @Transactional
-//    public void increaseClientsAgeWithGivenInteger(Integer increasingValue) {
-//        log.trace("increaseClientsAgeWithGivenInteger - method entered: increasingValue={}", increasingValue);
-//
-//        Iterable<Client> allClients = repository.findAll();
-//        log.trace("increaseClientsAgeWithGivenInteger - allClients={}", allClients);
-//
-//        allClients.forEach(client -> repository.findById(client.getId())
-//                .ifPresentOrElse(s -> s.setClientAge(client.getClientAge()+increasingValue), () -> { throw new CinemaBaseException("Non-existent client with given ID!");}));
-//
-//        log.trace("increaseClientsAgeWithGivenInteger - method finished");
-//    }
-//
-//    @Override
-//    public Client getTheAgeOfOldestClient() {
-//        log.trace("getTheAgeOfOldestClient - method entered");
-//
-//        Iterable<Client> allClients = repository.findAll();
-//        Set<Client> clients = new HashSet<>();
-//        allClients.forEach(clients::add);
-//        Optional<Client> result =  clients.stream().max(Comparator.comparing(Client::getClientAge));
-//
-//        log.trace("getTheAgeOfOldestClient - method finished");
-//
-//        return result.orElse(null);
-//    }
-//
-//    @Override
-//    public Boolean containsOne(Long identifier)
-//    {
-//        log.trace("containsOne - method entered");
-//
-//        Boolean result = this.repository.findById(identifier).isPresent();
-//
-//        log.trace("containsOne - method finished: result={}", result);
-//
-//        return result;
-//    }
-//
-//    @Override
-//    public Client get(Long identifier){
-//        log.trace("get - method entered: identifier={}", identifier);
-//
-//        Optional<Client> client = this.repository.findById(identifier);
-//        if (client.isPresent())
-//        {
-//            log.trace("get - method finished");
-//            return client.get();
-//        }
-//        else
-//        {
-//            log.trace("get - exception found");
-//            throw new ArrayIndexOutOfBoundsException("Client not found");
-//        }
-//
-//    }
+
 }

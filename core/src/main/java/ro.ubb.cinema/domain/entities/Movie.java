@@ -13,6 +13,49 @@ import java.util.stream.Collectors;
  * @author camelia-lazar
  */
 
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "movieGraphDirect",
+                attributeNodes = {
+                        @NamedAttributeNode("name"),
+                        @NamedAttributeNode("duration"),
+                        @NamedAttributeNode("genre"),
+                }
+        ),
+        @NamedEntityGraph(
+                name = "movieGraphLevel1",
+                attributeNodes = {
+                        @NamedAttributeNode("name"),
+                        @NamedAttributeNode("duration"),
+                        @NamedAttributeNode("genre"),
+                        @NamedAttributeNode(
+                                value = "tickets",
+                                subgraph = "ticketsSubGraphDirect"
+                        ),
+                        @NamedAttributeNode(
+                                value = "trailer",
+                                subgraph = "trailerSubGraphDirect"
+                        ),
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "ticketsSubgraphDirect",
+                                attributeNodes = {
+                                        @NamedAttributeNode("price"),
+                                        @NamedAttributeNode("date"),
+                                        @NamedAttributeNode("time")
+                                }
+                        ),
+                        @NamedSubgraph(
+                                name = "trailerSubGraphDirect",
+                                attributeNodes = {
+                                        @NamedAttributeNode("publishingYear"),
+                                        @NamedAttributeNode("soundtrack"),
+                                }
+                        )
+                }
+        )
+})
 @Entity(name = "Movie")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +71,7 @@ public class Movie extends BaseEntity<Long>{
     @Column(name="genre")
     private String genre;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> tickets;
 
     @Embedded

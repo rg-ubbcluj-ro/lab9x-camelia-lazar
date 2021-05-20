@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import ro.ubb.cinema.domain.entities.Movie;
 import ro.ubb.cinema.domain.validators.MovieValidator;
 import ro.ubb.cinema.domain.validators.exceptions.ValidatorException;
-import ro.ubb.cinema.repository.ClientJDBCRepository;
-import ro.ubb.cinema.repository.MovieJDBCRepository;
+import ro.ubb.cinema.repository.client.ClientJDBCRepository;
+import ro.ubb.cinema.repository.movie.MovieJDBCRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -43,7 +43,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteMovie(Long id) {
         log.trace("deleteMovie - method entered: movieId={}", id);
-        Movie movie = repository.findById(id).get();
+        Movie movie = repository.customFindOneLevel1(id);
 
         movie.getTickets()
                 .forEach( t -> {
@@ -60,7 +60,7 @@ public class MovieServiceImpl implements MovieService {
     public Movie updateMovie(Movie movie) {
         log.trace("updateMovie - method entered: movie={}", movie);
         movieValidator.validate(movie);
-        Movie updateMovie = repository.findById(movie.getId()).orElseThrow();
+        Movie updateMovie = repository.customFindOneLevel1(movie.getId());
         updateMovie.setName(movie.getName());
         updateMovie.setGenre(movie.getGenre());
         updateMovie.setDuration(movie.getDuration());
@@ -72,7 +72,7 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getAllMovies() {
         log.trace("getAllMovies - method entered");
 
-        List<Movie> movies = repository.findAll();
+        List<Movie> movies = repository.customFindAllLevel1();
 
         log.trace("getAllMovies - method finished: movies={}", movies);
         return movies;
@@ -81,7 +81,7 @@ public class MovieServiceImpl implements MovieService {
    @Override
     public List<Movie> filterMoviesByName(String nameToFilter) {
        log.trace("filterMoviesByName - method entered: nameToFilter={}", nameToFilter);
-       Iterable<Movie> movies = repository.findAll();
+       Iterable<Movie> movies = repository.customFindAllLevel1();
 
         List<Movie> filteredMovies = repository.getAllByNameContaining(nameToFilter);
 
@@ -103,55 +103,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie getMovieById(Long id) {
-        return repository.findById(id).get();
+        return repository.customFindOneLevel1(id);
     }
-
-//
-//    @Override
-//    public Set<Movie> getLongestMovies() {
-//        log.trace("filterMoviesByName - method entered");
-//
-//        Iterable<Movie> allMovies = repository.findAll();
-//
-//        Set<Movie> movies = new HashSet<>();
-//        allMovies.forEach(movies::add);
-//
-//        int maxDuration = movies.stream().mapToInt(Movie::getDuration)
-//                .max().orElseThrow(RuntimeException::new);
-//
-//        movies.removeIf(movie -> !movie.getDuration().equals(maxDuration));
-//
-//        log.trace("filterMoviesByName - method finished: longestMovies={}", movies);
-//
-//        return movies;
-//    }
-//
-//    @Override
-//    public Boolean containsOne(Long identifier)
-//    {
-//        log.trace("containsOne - method entered");
-//
-//        Boolean result = this.repository.findById(identifier).isPresent();
-//
-//        log.trace("containsOne - method finished: result={}", result);
-//
-//        return result;
-//    }
-//
-//    @Override
-//    public Movie get(Long identifier){
-//        log.trace("get - method entered: identifier={}", identifier);
-//
-//        Optional<Movie> movie = this.repository.findById(identifier);
-//        if (movie.isPresent())
-//        {
-//            log.trace("get - method finished");
-//            return movie.get();
-//        }
-//        else
-//        {
-//            log.trace("get - exception found");
-//            throw new ArrayIndexOutOfBoundsException("Movie not found");
-//        }
-//    }
 }

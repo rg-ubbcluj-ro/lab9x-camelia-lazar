@@ -14,6 +14,75 @@ import java.util.stream.Collectors;
  * @author fiamardar
  */
 
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "clientGraphDirect",
+                attributeNodes = {
+                        @NamedAttributeNode("clientFirstName"),
+                        @NamedAttributeNode("clientLastName"),
+                        @NamedAttributeNode("clientEmail"),
+                        @NamedAttributeNode("clientAge"),
+                }
+        ),
+        @NamedEntityGraph(
+                name = "clientGraphLevel1",
+                attributeNodes = {
+                        @NamedAttributeNode("clientFirstName"),
+                        @NamedAttributeNode("clientLastName"),
+                        @NamedAttributeNode("clientEmail"),
+                        @NamedAttributeNode("clientAge"),
+                        @NamedAttributeNode(
+                                value = "tickets",
+                                subgraph = "ticketsSubGraphDirect"
+                        )
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "ticketsSubgraphDirect",
+                                attributeNodes = {
+                                        @NamedAttributeNode("price"),
+                                        @NamedAttributeNode("date"),
+                                        @NamedAttributeNode("time")
+                                }
+                        )
+                }
+        ),
+        @NamedEntityGraph(
+                name = "clientGraphLevel2",
+                attributeNodes = {
+                        @NamedAttributeNode("clientFirstName"),
+                        @NamedAttributeNode("clientLastName"),
+                        @NamedAttributeNode("clientEmail"),
+                        @NamedAttributeNode("clientAge"),
+                        @NamedAttributeNode(
+                                value = "tickets",
+                                subgraph = "ticketsSubGraphLevel1"
+                        )
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "ticketsSubGraphLevel1",
+                                attributeNodes = {
+                                        @NamedAttributeNode("price"),
+                                        @NamedAttributeNode("date"),
+                                        @NamedAttributeNode("time"),
+                                        @NamedAttributeNode(
+                                                value = "movie",
+                                                subgraph = "movieSubGraphDirect"
+                                        )
+                                }
+                        ),
+                       @NamedSubgraph(
+                               name = "movieSubGraphDirect",
+                               attributeNodes = {
+                                       @NamedAttributeNode("name"),
+                                       @NamedAttributeNode("duration"),
+                                       @NamedAttributeNode("genre"),
+                               }
+                       )
+                }
+        )
+})
 @Entity(name = "Client")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +100,7 @@ public class Client extends BaseEntity<Long>{
     @Column(name="age")
 	private Integer clientAge;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> tickets;
 
     public Client(Long clientId) {

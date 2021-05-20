@@ -2,9 +2,7 @@ package ro.ubb.cinema.domain.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -13,6 +11,15 @@ import java.util.Objects;
  * @author razvan-kokovics
  */
 
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "cinemaGraphDirect",
+                attributeNodes = {
+                        @NamedAttributeNode("name"),
+                        @NamedAttributeNode("address")
+                }
+        ),
+})
 @Entity(name = "Cinema")
 @NoArgsConstructor
 @AllArgsConstructor
