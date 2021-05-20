@@ -1,0 +1,5 @@
+<dataset>
+    <cinema identifier="1" name="nume" address="adresa"  />
+    <cinema identifier="2" name="razvanel" address="bla"  />
+    <cinema identifier="3" name="CinemaCity" address="Teodor Mihali 47-49"  />
+</dataset>

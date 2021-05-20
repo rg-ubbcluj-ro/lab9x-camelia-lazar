@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ro.ubb.cinema.domain.entities.Cinema;
 import ro.ubb.cinema.domain.validators.CinemaValidator;
 import ro.ubb.cinema.domain.validators.exceptions.ValidatorException;
-import ro.ubb.cinema.repository.CinemaJDBCRepository;
+import ro.ubb.cinema.repository.cinema.CinemaJDBCRepository;
 
 import javax.xml.bind.SchemaOutputResolver;
 import java.util.*;
@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@Transactional
 public class CinemaServiceImpl implements CinemaService {
     private static final Logger log = LoggerFactory.getLogger(CinemaServiceImpl.class);
 
@@ -50,7 +51,7 @@ public class CinemaServiceImpl implements CinemaService {
     public Cinema updateCinema(Cinema cinema) {
         log.trace("updateCinema - method entered: cinema={}", cinema);
         cinemaValidator.validate(cinema);
-        Cinema updateCinema = repository.findById(cinema.getId()).orElseThrow();
+        Cinema updateCinema = repository.findOneDirect(cinema.getId());
         updateCinema.setName(cinema.getName());
         updateCinema.setAddress(cinema.getAddress());
         log.trace("updateCinema - method finished");
@@ -61,7 +62,7 @@ public class CinemaServiceImpl implements CinemaService {
     public List<Cinema> getAllCinemas() {
         log.trace("getAllCinemas - method entered");
 
-        List<Cinema> cinemas = repository.findAll();
+        List<Cinema> cinemas = repository.findAllDirect();
 
         log.trace("getAllCinemas - method finished: cinemas={}", cinemas);
 
@@ -83,7 +84,7 @@ public class CinemaServiceImpl implements CinemaService {
     public List<Cinema> sortCinemaByName() {
         log.trace("sortCinemaByName - method entered");
 
-        List<Cinema> cinemas = repository.findAll();
+        List<Cinema> cinemas = repository.findAllDirect();
 
 //        Comparator<Cinema> compareByName = (Cinema o1, Cinema o2) -> o1.getName().compareTo( o2.getName() );
 //        Collections.sort(cinemas, compareByName);
