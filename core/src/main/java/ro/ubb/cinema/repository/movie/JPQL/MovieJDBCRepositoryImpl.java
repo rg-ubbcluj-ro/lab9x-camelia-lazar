@@ -15,7 +15,6 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Component("MovieJDBCRepositoryJPQLImpl")
-@NoRepositoryBean
 public class MovieJDBCRepositoryImpl extends CustomRepositorySupport implements MovieJDBCRepositoryCustom {
     private static final Logger log = LoggerFactory.getLogger(MovieJDBCRepository.class);
 

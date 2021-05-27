@@ -19,8 +19,9 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+//ttendance
+
 @Component("ClientJDBCRepositoryCriteriaAPIImpl")
-@NoRepositoryBean
 public class ClientJDBCRepositoryImpl extends CustomRepositorySupport implements ClientJDBCRepositoryCustom {
     private static final Logger log = LoggerFactory.getLogger(ClientJDBCRepository.class);
 

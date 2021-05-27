@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.jpa.HibernateEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ro.ubb.cinema.domain.entities.Cinema;

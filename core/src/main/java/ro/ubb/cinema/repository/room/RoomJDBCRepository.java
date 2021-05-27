@@ -8,7 +8,7 @@ import ro.ubb.cinema.repository.Repository;
 
 import java.util.List;
 
-@Component("RoomJDBCRepositoryNativeSQL")
+@Component("RoomJDBCRepositoryCriteriaAPI")
 public interface RoomJDBCRepository extends Repository<Long, Room>, RoomJDBCRepositoryCustom {
     @Query("SELECT DISTINCT r FROM Room r WHERE r.id = ?1")
     @EntityGraph(value = "roomGraphDirect", type = EntityGraph.EntityGraphType.LOAD)

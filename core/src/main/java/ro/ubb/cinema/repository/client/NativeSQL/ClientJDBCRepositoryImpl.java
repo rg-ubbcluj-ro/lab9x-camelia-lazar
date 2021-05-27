@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.jpa.HibernateEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ro.ubb.cinema.domain.entities.Client;
@@ -17,6 +18,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Component("ClientJDBCRepositoryNativeSQLImpl")
+@NoRepositoryBean
 public class ClientJDBCRepositoryImpl  extends CustomRepositorySupport implements ClientJDBCRepositoryCustom {
     private static final Logger log = LoggerFactory.getLogger(ClientJDBCRepository.class);
 

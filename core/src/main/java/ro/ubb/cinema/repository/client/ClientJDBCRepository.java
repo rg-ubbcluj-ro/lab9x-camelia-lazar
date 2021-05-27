@@ -8,7 +8,7 @@ import ro.ubb.cinema.repository.Repository;
 
 import java.util.List;
 
-@Component("ClientDBCRepositoryJPQL")
+@Component("ClientDBCRepositoryCriteriaAPI")
 public interface ClientJDBCRepository extends Repository<Long, Client>, ClientJDBCRepositoryCustom {
     @Query("SELECT DISTINCT c FROM Client c WHERE c.id = ?1")
     @EntityGraph(value = "clientGraphDirect", type = EntityGraph.EntityGraphType.LOAD)
