@@ -1,0 +1,100 @@
+<h2>New Movie</h2>
+
+<form [formGroup]="addMovieForm" (ngSubmit)="saveMovie()">
+  <div class = "form-group">
+    <label>
+      Name:
+      <input type = "text" formControlName="movieName">
+    </label>
+
+    <div *ngIf="movieName != null && movieName.invalid && (movieName.dirty || movieName.touched)" class="alert alert-danger">
+      <div *ngIf="movieName.errors != null && movieName.errors.required">
+        Movie name is required
+      </div>
+
+      <div *ngIf="movieName.errors != null && movieName.errors.minLength">
+        Movie name must be at least 3 characters long
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class = "form-group">
+    <label>
+      Duration:
+      <input type="number" formControlName="duration">
+    </label>
+
+    <div *ngIf="duration != null && duration.invalid && (duration.dirty || duration.touched)" class="alert alert-danger">
+      <div *ngIf="duration.errors != null && duration.errors.required">
+        Movie duration is required
+      </div>
+
+      <div *ngIf="duration.errors != null && duration.errors.minLength">
+        Movie duration must be at least 10 minutes
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class = "form-group">
+    <label>
+      Genre:
+      <input type="text" formControlName="genre">
+    </label>
+
+    <div *ngIf="genre != null && genre.invalid && (genre.dirty || genre.touched)" class="alert alert-danger">
+      <div *ngIf="genre.errors != null && genre.errors.required">
+        Movie genre is required
+      </div>
+
+      <div *ngIf="genre.errors != null && genre.errors.minLength">
+        Movie genre should be at least 2 characters long
+      </div>
+    </div>
+  </div>
+
+  <div class = "form-group">
+    <label>
+      Trailer year:
+      <input type="text" formControlName="trailerYear">
+    </label>
+
+    <div *ngIf="trailerYear != null && trailerYear.invalid && (trailerYear.dirty || trailerYear.touched)" class="alert alert-danger">
+      <div *ngIf="trailerYear.errors != null && trailerYear.errors.required">
+       Trailer year is required
+      </div>
+
+      <div *ngIf="trailerYear.errors != null && trailerYear.errors.minLength">
+        Trailer year should be at least 2 characters long
+      </div>
+    </div>
+  </div>
+
+  <div class = "form-group">
+    <label>
+      Soundtrack:
+      <input type="text" formControlName="soundtrack">
+    </label>
+
+    <div *ngIf="soundtrack != null && soundtrack.invalid &&
+              (soundtrack.dirty || soundtrack.touched)" class="alert alert-danger">
+      <div *ngIf="soundtrack.errors != null && soundtrack.errors.required">
+        Trailer soundtrack is required
+      </div>
+
+      <div *ngIf="soundtrack.errors != null && soundtrack.errors.minLength">
+        Trailer soundtrack should be at least 2 characters long
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
+  <button type="submit" [disabled]="!addMovieForm.valid"> Add Movie </button>
+
+<!--  <button (click)="saveMovie(nameInput.value,durationInput.value,genreInput.value)">-->
+<!--    Save</button>-->
+</form>
