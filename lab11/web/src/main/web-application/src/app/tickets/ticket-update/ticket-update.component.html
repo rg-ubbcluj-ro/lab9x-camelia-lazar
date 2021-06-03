@@ -1,0 +1,11 @@
+<h2>Update Ticket</h2>
+
+<div>
+  <label>Ticket id:<input #idInput/></label><br/>
+  <label>Ticket Movie:<input #movieInput/></label><br/>
+  <label>Ticket Client:<input #clientInput/></label><br/>
+  <label>New Price:<input #priceInput/></label><br/>
+  <button (click)="updateTicket(idInput.value, priceInput.value,movieInput.value,clientInput.value)">
+    Save</button>
+</div>
+

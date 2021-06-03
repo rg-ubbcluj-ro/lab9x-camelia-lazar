@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+    client-service:
+        image: client_service:latest
+        ports:
+            - "1441:8080"
+        depends_on:
+            - postgres-db
+    cinema-service:
+        image: cinema_service:latest
+        ports:
+            - "1442:8081"
+        depends_on:
+            - postgres-db
+    ticket-service:
+        image: ticket_service:latest
+        ports:
+            - "1443:8082"
+        depends_on:
+            - postgres-db
+    movie-service:
+        image: movie_service:latest
+        ports:
+            - "1444:8083"
+        depends_on:
+            - postgres-db
+    frontend:
+        image: frontend:latest
+        ports:
+            - "4200:4200"
+        depends_on:
+            - gateway
+    gateway:
+        image: gateway:latest
+        ports:
+            - "4567:4567"
+        depends_on:
+            - client-service
+            - cinema-service
+    postgres-db:
+        image: postgres:latest
+        expose: 
+            - "5432"
+        ports:
+            - "1337:5432"
+        environment:
+            - POSTGRES_PASSWORD=database
+            - POSTGRES_DB=cinemaJDBC
+        #command:  bash - c "postgres && psql -h postgres_db -p 5432 -U postgres"
+            
